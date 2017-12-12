@@ -1,5 +1,6 @@
 import time
 import RPi.GPIO as GPIO
+from inter import fr
     
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -10,15 +11,21 @@ GPIO.setup(23,GPIO.OUT)
 GPIO.setup(16,GPIO.OUT) #trigger
 GPIO.setup(24,GPIO.IN) #echo
 
-def marche(ch):
+def marche(ch): ##here
     if (ch=='A'):
     elif (ch=='B'):
     elif (ch=='R'):
     elif (ch=='amphi'):
 
+def frust():
+    turnL(17,18,22,23)
+    time.sleep(1)
+    turnR(17,18,22,23)
+    
 def mav(x1,y1,x2,y2,i,c=0):
     if (c==5):
-        
+        fr()
+        return 0
     if (i>25): 
         GPIO.output(x1,True)
         GPIO.output(y1,False)
@@ -72,7 +79,9 @@ def capt(x1,y1,v,t):
         dur=end - start
         d=(331/2)*dur*100
         print (d)
-        mav(t[0],t[1],t[2],t[3],d)
+        ex=mav(t[0],t[1],t[2],t[3],d)
+        if (ex==0):
+            mar(t[0],t[1],t[2],t[3]) ##here
         time.sleep(0.1)
 
 #def Advance(x1,y1,n,t):
