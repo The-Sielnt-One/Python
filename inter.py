@@ -4,27 +4,7 @@ import pygame.locals
 import time
 from motor import marche,frust
 
-root=Tk()
-x,y=root.winfo_screenwidth(),root.winfo_screenheight()
-root.destroy()
-pygame.init()
-screen=pygame.display.set_mode((x,y))
-pygame.display.set_caption("Welcome")
 
-v=True
-BAc=(95,158,160)
-BBc=(30,144,255)
-BRc=(0,191,255)
-Bamphic=(100,149,237)
-Bexitc=(230,0,0)
-bx,by=x/4,y/5.5
-
-pygame.mixer.init()
-hello=pygame.mixer.Sound("BB8-Hello.wav")
-hello.play()
-time.sleep(2.5)
-text=['Bloc A','Bloc B','Bloc R','Amphi','exit']
-pygame.font.init()
 
 def Dtxt(ch,x,y):
     screen.blit(ft.render(ch,True,(0,0,0)),(x,y))
@@ -40,6 +20,7 @@ def cal():
     r=pygame.mixer.Sound('BB8 Follow me!.wav')
     r.play()
     time.sleep(3)
+    r=pygame.mixer.Sound('BB8 Walking.wav')
     
 def fr():
     r=pygame.mixer.Sound('BB8 Frustration.wav')
@@ -48,6 +29,27 @@ def fr():
     time.sleep(3)
  
 def main():
+    root=Tk()
+    x,y=root.winfo_screenwidth(),root.winfo_screenheight()
+    root.destroy()
+    pygame.init()
+    screen=pygame.display.set_mode((x,y))
+    pygame.display.set_caption("Welcome")
+
+    v=True
+    BAc=(95,158,160)
+    BBc=(30,144,255)
+    BRc=(0,191,255)
+    Bamphic=(100,149,237)
+    Bexitc=(230,0,0)
+    bx,by=x/4,y/5.5
+
+    pygame.mixer.init()
+    hello=pygame.mixer.Sound("BB8-Hello.wav")
+    hello.play()
+    time.sleep(2.5)
+    text=['Bloc A','Bloc B','Bloc R','Amphi','exit']
+    pygame.font.init()
     screen.fill((255,255,255))
     im=pygame.image.load("enisologo.png").convert()
     screen.blit(im,(0,50))
@@ -66,7 +68,7 @@ def main():
             if (i.type==pygame.MOUSEBUTTONDOWN):
                 mouse=pygame.mouse.get_pos()
                 if BA.collidepoint(mouse):
-                    cal():
+                    cal()
                     marche('A')
                 if BB.collidepoint(mouse):
                     cal()
