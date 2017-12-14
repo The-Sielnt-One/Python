@@ -2,15 +2,16 @@ from tkinter import *
 import pygame
 import pygame.locals
 import time
-from motor import marche,frust
+import webbrowser
+#from motor import marche,frust
 
 
 
-def Dtxt(ch,x,y):
+def Dtxt(screen,ft,ch,x,y):
     screen.blit(ft.render(ch,True,(0,0,0)),(x,y))
     pygame.display.update()
 
-def Butt(elt,t):
+def Butt(screen,elt,t):
     return pygame.draw.rect(screen,elt,t)
 
 def cal():
@@ -54,14 +55,18 @@ def main():
     im=pygame.image.load("enisologo.png").convert()
     screen.blit(im,(0,50))
     ft=pygame.font.SysFont("comicsansms",int(by*2/3))
-    BA=Butt(BAc,(x-bx,0,bx,by))
-    BB=Butt(BBc,(x-bx,by+2,bx,by))
-    BR=Butt(BRc,(x-bx,2*(by+2),bx,by))
-    Bamphi=Butt(Bamphic,(x-bx,3*(by+2),bx,by))
-    Bexit=Butt(Bexitc,(x-bx,4*(by+2),bx,by))
+    BA=Butt(screen,BAc,(x-bx,0,bx,by))
+    BB=Butt(screen,BBc,(x-bx,by+2,bx,by))
+    BR=Butt(screen,BRc,(x-bx,2*(by+2),bx,by))
+    Bamphi=Butt(screen,Bamphic,(x-bx,3*(by+2),bx,by))
+    Bexit=Butt(screen,Bexitc,(x-bx,4*(by+2),bx,by))
+    bnewsc=(39, 96, 136)
+    ftn=pygame.font.SysFont("comicsansms",int(by/6))
+    bnews=Butt(screen,bnewsc,(0,0,bx/4,by/4))
+    Dtxt(screen,ftn,"NEWS",5,5)
     pygame.display.flip()
     for i in range(5):
-        Dtxt(text[i],x-bx*5/6,10*i*by/10)
+        Dtxt(screen,ft,text[i],x-bx*5/6,10*i*by/10)
     dep=time.time()
     while v:
         for i in pygame.event.get():
@@ -79,8 +84,11 @@ def main():
                 if Bamphi.collidepoint(mouse):
                     cal()
                     marche('amphi')
+                if bnews.collidepoint(mouse):
+                    webbrowser.open('http://www.eniso.info/')
                 if (Bexit.collidepoint(mouse))or(i.type==pygame.QUIT):
                     v=False
-            if (time.time()-dep>=20):
+            if (time.time()-dep>=40):
                 v=False
     pygame.quit()
+main()
